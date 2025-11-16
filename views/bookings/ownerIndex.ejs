@@ -1,0 +1,58 @@
+<% layout("/layouts/boilerplate") -%>
+    <div class="container mt-4">
+        <h2 class="mb-4 text-center">Your Sport Item Bookings</h2>
+        <% if (bookings.length===0) { %>
+            <p class="text-center text-muted">No bookings yet.</p>
+            <% } else { %>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sport Item</th>
+                            <th>Booked By</th>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (let b of bookings) { %>
+                            <% if (b.sportItem) { %>
+                                <tr>
+                                    <td><a href="/sportItems/<%= b.sportItem._id %>">
+                                            <%= b.sportItem.title %>
+                                        </a></td>
+                                    <td>
+                                        <%= b.user.username %> (<%= b.user.email %>)
+                                    </td>
+                                    <td>
+                                        <%= b.startAt.toLocaleString() %>
+                                    </td>
+                                    <td>
+                                        <%= b.endAt.toLocaleString() %>
+                                    </td>
+                                    <td>
+                                        <%= b.status %>
+                                    </td>
+                                </tr>
+                                <% } else { %>
+                                    <tr class="table-danger">
+                                        <td>**Item Deleted**</td>
+                                        <td>
+                                            <%= b.user.username %> (<%= b.user.email %>)
+                                        </td>
+                                        <td>
+                                            <%= b.startAt.toLocaleString() %>
+                                        </td>
+                                        <td>
+                                            <%= b.endAt.toLocaleString() %>
+                                        </td>
+                                        <td>
+                                            <%= b.status %> (Item Removed)
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                        <% } %>
+                    </tbody>
+                </table>
+                <% } %>
+    </div>

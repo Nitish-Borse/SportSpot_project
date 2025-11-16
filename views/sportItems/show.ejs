@@ -1,0 +1,121 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <style>
+        /* Existing mobile style */
+        @media (max-width: 500px) {
+            .show-img {
+                height: 35vh;
+            }
+        }
+        /* New style to align owner buttons horizontally and remove offsets */
+        .owner-actions {
+            display: flex; /* Makes buttons line up */
+            gap: 1rem; /* Space between buttons */
+            margin-top: 1rem; /* Space above buttons */
+            margin-bottom: 1rem; /* Space below buttons */
+            /* Add any other desired styling for alignment within the card body */
+        }
+    </style>
+
+    <body>
+        <div class="row mt-3 main_cointainer">
+            <div class="col-8 offset-3">
+                <h3 class="sportItem_title">
+                    <%= sportItem.title %>
+                </h3>
+            </div>
+
+            <div class="card col-6 offset-3 sportItem-card show-card">
+                <img src="<%= sportItem.image.url %>" class="card-img-top show-img" alt="...">
+                <div class="card-body">
+                    <p class="card-text">
+                    <h5>Owned By : <%= sportItem.owner.username %>
+                    </h5>
+                    <p>
+                        <%= sportItem.sportCategory %>
+                    </p>
+                    <p>
+                        <%= sportItem.description %>
+                    </p>
+                    <p> &#8377;<%= sportItem.pricePerHour.toLocaleString("en-IN") %>/hour </p>
+                    <p>
+                        <%= sportItem.location %>
+                    </p>
+                    </p>
+
+                    <% if (currUser && sportItem.owner._id.equals(currUser._id)) { %>
+                        <div class="owner-actions">
+                           <a href="/sportItems/<%= sportItem._id %>/edit" class="btn btn-dark owner-btn-fix">Edit</a>
+                           <form method="post" action="/sportItems/<%= sportItem._id %>?_method=DELETE">
+                               <button class="btn btn-danger owner-btn-fix">Delete</button>
+                           </form>
+                        </div>
+                    <% } else { %>
+                            <a href="/sportItems/<%= sportItem._id %>/book" class="btn btn-primary"> Book Now </a>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="col-6 offset-3 mb-3">
+                <% if(currUser) { %>
+                    <hr>
+                    <h4>Leave a Review</h4>
+                    <form method="post" action="/sportItems/<%= sportItem._id %>/reviews" novalidate
+                        class="needs-validation">
+                        <div class="mb-3 mt-3">
+                            <label for="rating" class="form-label">Rating</label>
+                            <fieldset class="starability-slot">
+                                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]"
+                                    value="1" checked aria-label="No rating." />
+                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                <label for="first-rate1" title="Terrible">1 star</label>
+                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                <label for="first-rate2" title="Not good">2 stars</label>
+                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                <label for="first-rate3" title="Average">3 stars</label>
+                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                <label for="first-rate4" title="Very good">4 stars</label>
+                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                <label for="first-rate5" title="Amazing">5 stars</label>
+                            </fieldset>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <label for="comment" class="form-label">Comment</label>
+                            <textarea name="review[comment]" id="comment" cols="30" rows="5"
+                                class="form-control" required></textarea>
+                            <div class="invalid-feedback">Please submit some comment for review </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-outline-dark ">Submit</button>
+                        </div>
+                    </form>
+                <% } %>
+                <hr>
+                <p><b>All Reviews</b></p>
+                <div class="row">
+                    <% for(review of sportItem.reviews) { %>
+
+                        <div class="card col-5 ms-3 mb-3">
+                            <div class="card-body mb-3">
+                                <h5 class="card-title mt-2">@<%= review.author.username %>
+                                </h5>
+                                <p class="starability-result cart-text" data-rating="<%= review.rating %>">
+                                </p>
+                                <p class="card-text">
+                                    <%= review.comment %>
+                                </p>
+
+                                <% if (currUser && review.author._id.equals(currUser._id)) { %>
+                                    <form class="mb-3"
+                                        action="/sportItems/<%= sportItem._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                        method="post">
+                                        <button class="btn btn-sm btn-dark">Delete</button>
+                                    </form>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </body>
