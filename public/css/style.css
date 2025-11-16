@@ -1,0 +1,272 @@
+body {
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main_cointainer {
+    margin: 0 2rem;
+}
+
+.cointainer {
+    flex: 1;
+}
+
+/* Navbar */
+.navbar {
+    height: 5rem;
+    background-color: white;
+}
+
+.fa-compass {
+    color: #fe424d;
+    font-size: 2rem;
+}
+
+.main-link {
+    font-size: larger !important;
+    font-weight: bold !important;
+}
+
+.nav-link {
+    color: #222222 !important;
+}
+
+.nav-links .nav-link {
+    margin-right: 0.5rem;
+    /* adjust space between links */
+}
+
+.nav-links .nav-link:last-child {
+    margin-right: 0;
+    /* remove extra space after last link */
+}
+
+.navbar-brand {
+    margin-right: 0.3rem !important;
+}
+
+/* Footer */
+.f-info-links a {
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+}
+
+.f-info-social i {
+    cursor: pointer;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.f-info-social,
+.f-info-links,
+.f-info-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.f-info {
+    text-align: center;
+    height: 8rem;
+    background-color: #ebebeb;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+}
+
+/* Cards */
+.sportItem-link {
+    text-decoration: none;
+}
+
+.sportItem-card {
+    border: none !important;
+    margin-bottom: 2rem;
+}
+
+.card-img-top {
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.card-text p {
+    font-weight: 400 !important;
+}
+
+.card-img-overlay:hover {
+    opacity: 0.2;
+    background-color: white;
+}
+
+/* show page */
+.show-card {
+    margin: 0;
+    padding: 0;
+}
+
+.show-img {
+    height: 60vh;
+}
+
+.btns {
+    display: flex;
+}
+
+.del-btn {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
+
+/* Edit page */
+.edit-btn {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* review block collapse fix css */
+/* Responsive fixes for Show Page */
+@media (max-width: 780px) {
+
+    .main_cointainer {
+        padding: 14px;
+    }
+
+    .sportItem_title {
+        text-align: start;
+    }
+
+    .show-card {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    /* Buttons section - fix alignment and size */
+    .btns {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Ensure both Edit (link) and Delete (form button) match */
+    .btns a,
+    .btns form {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .edit-btn,
+    .del-btn {
+        width: 80%;
+        max-width: 250px;
+        height: 45px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 6px;
+        transition: all 0.25s ease;
+        text-align: center;
+        display: block;
+    }
+
+    /* Edit button */
+    .edit-btn {
+        background-color: #fe424d !important;
+        color: #fff !important;
+        box-shadow: 0 2px 6px rgba(254, 66, 77, 0.3);
+    }
+
+    .edit-btn:hover {
+        background-color: #ff616d !important;
+        transform: scale(1.03);
+    }
+
+    /* Delete button */
+    .del-btn {
+        background-color: #444 !important;
+        color: #fff !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .del-btn:hover {
+        background-color: #000 !important;
+        transform: scale(1.03);
+    }
+
+
+    /* Review section cards */
+    .row .card {
+        width: 90% !important;
+        margin: 0.5rem auto !important;
+    }
+
+    .starability-result {
+        width: 120px;
+        height: 25px;
+    }
+
+    .col-6.offset-3 {
+        width: 100% !important;
+        margin: 10px !important;
+        padding: 0 1rem;
+    }
+
+    h4,
+    p {
+        text-align: start;
+    }
+
+    .main_cointainer {
+        margin: 0 1rem;
+    }
+}
+
+.owner-actions {
+    display: flex;
+    /* Enables flexible layout */
+    gap: 1rem;
+    /* Adds space between the buttons */
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Important: This ensures the button inside the form is treated as a direct flex item */
+.owner-actions form {
+    display: contents;
+}
+
+/* Custom fix to make buttons the same size */
+.owner-btn-fix {
+    /* Set a minimum width to force the smaller button ("Edit") to expand */
+    min-width: 80px;
+    text-align: center;
+    /* Ensures the text is centered within the fixed width */
+}
+
+/* Ensure the button inside the form also respects the min-width */
+.owner-actions form .btn {
+    min-width: 80px;
+}
+
+/* To fix the flash box  */
+.flash-center {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}

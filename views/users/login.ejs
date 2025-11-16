@@ -1,0 +1,54 @@
+<% layout("/layouts/boilerplate") -%>
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 mx-auto">
+            
+            <div class="card shadow p-4">
+                <h2 class="card-title text-center mb-4">Login to SportSpot</h2>
+                
+                <form method="post" action="/login" class="needs-validation" novalidate>
+                    
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" name="username" id="username" class="form-control" required>
+                        <div class="invalid-feedback">Please enter a valid username.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" name="password" id="password" class="form-control" required>
+                        <div class="invalid-feedback">Please enter your password.</div>
+                    </div>
+                    
+                    <p class="text-end mb-4">
+                        <a href="/forgot-password" class="text-decoration-none">Forgot password?</a>
+                    </p>
+
+                    <button class="btn btn-success w-100 mb-3" style="background-color: #fe424d; border-color: #fe424d;">
+                        Login
+                    </button>
+                </form>
+
+                <div class="d-flex align-items-center mb-3">
+                    <hr class="flex-grow-1">
+                    <span class="mx-2 text-muted">OR</span>
+                    <hr class="flex-grow-1">
+                </div>
+
+                <div class="text-center mb-3">
+                    <a href="/auth/google" class="btn btn-outline-secondary w-100" style="font-weight: 500;">
+                        <i class="fa-brands fa-google me-2"></i> Continue with Google
+                    </a>
+                </div>
+
+                <hr>
+
+               <p class="text-center mb-0 mt-3">
+    Don't have an account? <a href="/signup" class="text-decoration-none">Sign up</a> 
+</p>
+
+            </div>
+        </div>
+    </div>
+</div>

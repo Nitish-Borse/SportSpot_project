@@ -1,0 +1,120 @@
+<style>
+/* ... existing styles ... */
+.search-btn {
+    background-color: #fe424d;
+    color: #fff;
+    border-radius: 25px;
+    padding: 0 1rem;
+    white-space: nowrap;
+    /* keep text in one line */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.search-btn:hover {
+    background-color: #fe424d;
+    color: #fff;
+}
+.search-btn i {
+    display: inline;
+}
+/* Activelink */
+.active-link {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #fe424d !important;
+}
+/* Navbar dropdown overlay fix */
+@media (max-width: 768px) {
+    /*.cointainer {
+        margin-top: 3rem !important;
+    } */
+    #navbarNavAltMarkup {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        padding: 1rem;
+        border-bottom: 1px solid #ddd;
+        z-index: 999;
+        /* stays above other content */
+    }
+    .navbar .search-container {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .navbar-nav.nav-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+</style>
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand m-3 main-link" href="/sportItems"><i class="fa-solid fa-volleyball"></i>
+            SportSpot </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+                <form method="get" action="/sportItems/search" class="d-flex my-2 my-md-0 me-md-3"
+                    role="search">
+                    <input class="form-control me-2 search-inp" type="search" name="category"
+                        placeholder="Search Sport Items" aria-label="Search" />
+                    <button class="btn search-btn" type="submit"><i
+                            class="fa-solid fa-magnifying-glass"></i>Search</button>
+                </form>
+            </div>
+            <div class="navbar-nav ms-auto nav-links">
+                <a class="nav-link" href="/sportItems/ground">Ground</a>
+                <a class="nav-link" href="/sportItems/equipment">Equipment</a>
+                <a class="nav-link" href="/sportItems/new">Add Sport Item</a>
+                <% if (!currUser) { %>
+                <a class="nav-link" href="/signup">Signup</a>
+                <a class="nav-link" href="/login">Login</a>
+                <% } %>
+                <% if(currUser) { %>
+                <a class="nav-link" href="/my/bookings">My Bookings</a>
+                <a class="nav-link" href="/owner/bookings">Item Bookings</a>
+                <a class="nav-link" href="/logout">Logout</a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</nav>
+<script>
+    const navLinks = document.querySelectorAll(".nav-links a"); // Corrected selector to catch all 'a' tags
+    const currentPath = window.location.pathname;
+
+    navLinks.forEach(link => {
+        const href = link.getAttribute("href");
+        //' Skip Logout
+        if (href === "/logout") return;
+
+        //' Match categories (ground, equipment) and specific pages
+        if (
+            (href === "/sportItems/ground" && currentPath.startsWith("/sportItems/ground")) ||
+            (href === "/sportItems/equipment" && currentPath.startsWith("/sportItems/equipment")) ||
+            (href === "/sportItems/new" && currentPath === "/sportItems/new") ||
+            (href === "/login" && currentPath.startsWith("/login")) ||
+            (href === "/signup" && currentPath.startsWith("/signup")) ||
+            (href === "/my/bookings" && currentPath.startsWith("/my/bookings")) ||
+            (href === "/owner/bookings" && currentPath.startsWith("/owner/bookings"))
+        ) {
+            link.classList.add("active-link");
+        }
+
+        // Instant click feedback
+        link.addEventListener("click", function () {
+            navLinks.forEach(l => {
+                if (l.getAttribute("href") !== "/logout") {
+                    l.classList.remove("active-link");
+                }
+            });
+            this.classList.add("active-link");
+        });
+    });
+</script>

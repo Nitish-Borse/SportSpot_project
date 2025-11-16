@@ -1,0 +1,71 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <body>
+        <div class="row mt-3">
+            <div class="col-8 offset-2">
+                <h3>Create a New Sport Item</h3>
+                <form method="post" action="/sportItems" novalidate class="needs-validation"  enctype="multipart/form-data">
+
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" id="title" name="sportItem[title]" placeholder="Add a catchy title"
+                            class="form-control" required>
+                        <div class="valid-feedback">title looks good</div>
+                        <div class="invalid-feedback">please enter valid title</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="sportCategory" class="form-label">Sport Category</label>
+                            <input type="text" id="sportCategory" name="sportItem[sportCategory]"
+                                placeholder="enter sport category" class="form-control" required>
+                            <div class="invalid-feedback">please enter valid sport category</div>
+                        </div>
+
+                        <div class="mb-3 col-md-6">
+                            <label for="type" class="form-label">Choose Type of Sport Item</label>
+                            <select name="sportItem[type]" id="type" class="form-control" required>
+                                <option value="">--Please choose an option--</option>
+                                <option value="equipment">Equipment</option>
+                                <option value="ground">Ground</option>
+                            </select>
+                            <div class="invalid-feedback">please enter valid sport category</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea id="description" name="sportItem[description]" class="form-control"
+                            required></textarea>
+                        <div class="invalid-feedback">please enter valid description</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mb-3 col-md-4">
+                            <label for="price" class="form-label">Price</label>
+                            <input id="price" name="sportItem[pricePerHour]" placeholder="enter price"
+                                class="form-control" required>
+                            <div class="invalid-feedback">please enter valid price</div>
+                        </div>
+
+                        <div class="mb-3 col-md-8">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" id="location" name="sportItem[location]" placeholder="enter location"
+                                class="form-control" required>
+                            <div class="invalid-feedback">please enter valid location</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Upload Sport Item Image</label>
+                        <input type="file" id="image" name="sportItem[image]" class="form-control" required>
+                        <div class="invalid-feedback">please enter valid image</div>
+                    </div>
+
+                    <button class="btn btn-dark add-btn mt-3">Add Sport Item (Ground/Equipment)</button>
+                    <br><br>
+
+                </form>
+            </div>
+        </div>
+    </body>

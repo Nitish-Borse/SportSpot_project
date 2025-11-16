@@ -1,0 +1,21 @@
+<% if (success && success.length) { %>
+    <div class="row text-center">
+        <div class="col-10 **mx-auto** flash-center col-md-6 offset-md-3">
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                <div><%= success %></div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+<% } %>
+
+<% if (error && error.length) { %>
+    <div class="row">
+        <div class="col-10 **mx-auto** flash-center col-md-6 offset-md-3">
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                <div><%= error %></div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+<% } %>

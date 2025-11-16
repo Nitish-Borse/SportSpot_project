@@ -1,0 +1,25 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <body>
+        <div class="main_cointainer mt-4">
+            <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+                <% for (let sportItem of allSportItems) { %>
+                    <a href="/sportItems/<%= sportItem._id %>" class="sportItem-link">
+                        <div class="card col sportItem-card">
+                            <img src="<%= sportItem.image.url %>" class="card-img-top" alt="..." style="height: 20rem;">
+                            <div class="card-img-overlay"></div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <b>
+                                        <%= sportItem.title %>
+                                    </b> <br>
+                                    &#8377;<%= sportItem.pricePerHour.toLocaleString("en-IN") %>/hour <br>
+                                        <%= sportItem.location %>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                    <% } %>
+            </div>
+        </div>
+    </body>

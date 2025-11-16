@@ -1,0 +1,12 @@
+<% layout("/layouts/boilerplate") -%>
+<div class="row mt-4">
+  <div class="col-8 offset-2">
+    <h2>Booking Details</h2>
+    <p><strong>Item:</strong> <a href="/sportItems/<%= booking.sportItem._id %>"><%= booking.sportItem.title %></a></p>
+    <p><strong>User:</strong> <%= booking.user.username %> (<%= booking.user.email %>)</p>
+    <p><strong>Start:</strong> <%= booking.startAt.toLocaleString() %></p>
+    <p><strong>End:</strong> <%= booking.endAt.toLocaleString() %></p>
+    <p><strong>Status:</strong> <%= booking.status %></p>
+    <p><strong>Note:</strong> <%= booking.note || "—" %></p>
+  </div>
+</div>
