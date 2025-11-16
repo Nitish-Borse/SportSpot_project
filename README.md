@@ -67,15 +67,23 @@ Owners can add items, manage listings, and view bookings.
 ---
 
 ## 📁 Project Structure
-/controllers
-/models
-/routes
-/views
-/utils
-/public
-/init
-app.js
-cloudConfig.js
+├── controllers/ # Route logic
+├── init/ # Data seeding files
+├── models/ # Mongoose models
+├── public/ # CSS, JS, static assets
+├── routes/ # Express route handlers
+├── utils/ # Helper functions
+├── views/ # EJS templates
+│
+├── app.js # Main server file
+├── cloudConfig.js # Cloudinary setup
+├── middleware.js # Custom middleware
+├── schema.js # Joi validation schema
+├── package.json
+├── package-lock.json
+├── .gitignore
+├── .copilotignore
+└── README.md
 
 ---
 
