@@ -7,20 +7,24 @@ module.exports.renderNewBookingForm = async (req, res) => {
   const { id } = req.params;  // sport item id
   const sportItem = await SportItem.findById(id);
 
-  // 🧠 Fetch all existing bookings for this sport item that are not cancelled
+  const now = new Date();
+
+  // ⭐ Fetch only upcoming (future) bookings, ignore past ones
   const existingBookings = await Booking.find({
     sportItem: sportItem._id,
     status: { $in: ["pending", "confirmed"] },
-  });
+    endAt: { $gt: now }   // <<< 🧠 key change here
+  }).sort({ startAt: 1 });
 
   res.render("bookings/new", { sportItem, existingBookings });
 };
+
 
 async function hasOverlap(sportItemId, startAt, endAt) {
   // Overlap condition: existing.start < new.end && existing.end > new.start
   const overlapping = await Booking.findOne({
     sportItem: sportItemId,
-    status: { $in: ["pending","confirmed"] },
+    status: { $in: ["pending", "confirmed"] },
     $expr: {
       $and: [
         { $lt: ["$startAt", endAt] },
@@ -134,11 +138,26 @@ module.exports.showBooking = async (req, res, next) => {
 };
 
 module.exports.userBookings = async (req, res) => {
+  const now = new Date();
+
+  // 🧠 Convert past bookings to completed in DB
+  await Booking.updateMany(
+    {
+      user: req.user._id,
+      status: { $in: ["pending", "confirmed"] },
+      endAt: { $lt: now }
+    },
+    { $set: { status: "completed" } }
+  );
+
+  // 🧠 Fetch updated bookings
   const bookings = await Booking.find({ user: req.user._id })
     .populate("sportItem")
     .sort({ startAt: -1 });
+
   res.render("bookings/userBookings.ejs", { bookings });
 };
+
 
 
 // owner view: GET /owner/bookings
@@ -155,38 +174,38 @@ module.exports.ownerBookings = async (req, res) => {
 
 // Function to cancel a booking (NEW ADDITION)
 module.exports.cancelBooking = async (req, res) => {
-    const { bookingId } = req.params;
-    const booking = await Booking.findById(bookingId).populate("user");
+  const { bookingId } = req.params;
+  const booking = await Booking.findById(bookingId).populate("user");
 
-    if (!booking) {
-        req.flash("error", "Booking not found.");
-        return res.redirect("/my/bookings");
-    }
+  if (!booking) {
+    req.flash("error", "Booking not found.");
+    return res.redirect("/my/bookings");
+  }
 
-    // 1. Check if the logged-in user is the owner of the booking
-    if (!booking.user._id.equals(req.user._id)) {
-        req.flash("error", "You do not have permission to cancel this booking.");
-        return res.redirect("/my/bookings");
-    }
+  // 1. Check if the logged-in user is the owner of the booking
+  if (!booking.user._id.equals(req.user._id)) {
+    req.flash("error", "You do not have permission to cancel this booking.");
+    return res.redirect("/my/bookings");
+  }
 
-    // 2. Check if the booking start time is in the future
-    if (booking.startAt < new Date()) {
-        req.flash("error", "Cannot cancel. This booking has already started.");
-        return res.redirect("/my/bookings");
-    }
+  // 2. Check if the booking start time is in the future
+  if (booking.startAt < new Date()) {
+    req.flash("error", "Cannot cancel. This booking has already started.");
+    return res.redirect("/my/bookings");
+  }
 
-    // 3. Check if it's already cancelled
-    if (booking.status === "cancelled") {
-        req.flash("error", "This booking is already cancelled.");
-        return res.redirect("/my/bookings");
-    }
+  // 3. Check if it's already cancelled
+  if (booking.status === "cancelled") {
+    req.flash("error", "This booking is already cancelled.");
+    return res.redirect("/my/bookings");
+  }
 
-    // 4. Update status to 'cancelled'
-    booking.status = "cancelled";
-    await booking.save();
+  // 4. Update status to 'cancelled'
+  booking.status = "cancelled";
+  await booking.save();
 
-    req.flash("success", "Booking successfully cancelled.");
-    res.redirect("/my/bookings");
+  req.flash("success", "Booking successfully cancelled.");
+  res.redirect("/my/bookings");
 };
 
 
