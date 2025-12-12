@@ -1,6 +1,6 @@
 # 🏆 SportSpot – Sports Ground & Equipment Renting and Simple Booking Platform
 
-SportSpot is a full-stack MERN-style web application built using **Node.js, Express, MongoDB, Passport.js, Google OAuth, Cloudinary, and EJS templates**.  
+SportSpot is a full-stack web application built using **Node.js, Express, MongoDB, Passport.js, Google OAuth, Cloudinary, and EJS templates**.  
 Users can browse sports items, create accounts, upload items, write reviews, and make **simple bookings (without payment)** to simulate a real renting experience.  
 Owners can add items, manage listings, and view bookings.
 
@@ -64,72 +64,7 @@ Owners can add items, manage listings, and view bookings.
 | **Architecture** | MVC |
 | **Deployment Ready** | Yes |
 
----
 
-## 📁 Project Structure
-├── controllers/ # Route logic
-├── init/ # Data seeding files
-├── models/ # Mongoose models
-├── public/ # CSS, JS, static assets
-├── routes/ # Express route handlers
-├── utils/ # Helper functions
-├── views/ # EJS templates
-│
-├── app.js # Main server file
-├── cloudConfig.js # Cloudinary setup
-├── middleware.js # Custom middleware
-├── schema.js # Joi validation schema
-├── package.json
-├── package-lock.json
-├── .gitignore
-├── .copilotignore
-└── README.md
 
----
 
-## 🔑 Environment Variables
 
-Create a `.env` file in the root directory:
-JWT_SECRET=your_jwt_secret
-GOOGLECLIENTID=your_google_id
-GOOGLECLIENTSECRET=your_google_secret
-GOOGLECALLBACKURL=http://localhost:8080/auth/google/callback
-
-CLOUDINARY_CLOUD=your_cloud
-CLOUDINARY_KEY=your_key
-CLOUDINARY_SECRET=your_secret
-
-EMAIL_USER=your_email
-EMAIL_PASS=your_email_app_password
-
----
-
-### ⚠️ Important: Never Upload Your `.env` File
-
-Your `.gitignore` **must include**:
-.env
-.env.*
-
----
-
-## ▶️ How to Run Locally
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/yourusername/sportspot.git
-cd sportspot
-```
-
-### 2. Install dependencies 
-```npm install```
-
-### 3. Setup your .env file
-Use the values listed in the Environment Variables section.
-
-### 4. (Optional) Seed sample data
-```node init/index.js```
-
-###5. Start the server
-```node app.js```
-Server will run at:
-👉 http://localhost:8080
