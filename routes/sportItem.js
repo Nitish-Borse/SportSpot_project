@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const SportItem = require("../models/sport_Item.js");
 const wrapAsync = require("../utils/wrapAsync.js");
-const { isLoggedIn, isOwner, validateSportItem } = require("../middleware.js");
+const { isLoggedIn, isOwner, validateSportItem, requireSportItemImage } = require("../middleware.js");
 const path = require("path");
 const multer = require("multer");
 const { storage } = require("../cloudConfig.js");
@@ -16,10 +16,12 @@ router
     .get(wrapAsync(sportItemContoller.index))
     .post(
         isLoggedIn,
-        validateSportItem,
         upload.single("sportItem[image]"),
+        validateSportItem,
+        requireSportItemImage,
         wrapAsync(sportItemContoller.createSportItem)
     );
+
 
 // New Form Route
 router.get("/new", isLoggedIn, sportItemContoller.renderNewForm);
@@ -40,10 +42,11 @@ router
     .put(
         isLoggedIn,
         isOwner,
-        validateSportItem,
         upload.single("sportItem[image]"),
+        validateSportItem,
         wrapAsync(sportItemContoller.updateSportItem)
     )
+
     .delete(isLoggedIn, isOwner, wrapAsync(sportItemContoller.deleteSportItem));
 
 // Edit Form Route

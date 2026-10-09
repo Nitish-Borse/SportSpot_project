@@ -22,7 +22,7 @@ module.exports.signup = async (req, res, next) => {
     );
 
     // Create a verification link
-    const verifyUrl = `http://localhost:8080/verify/${token}`;
+    const verifyUrl = `${process.env.APP_BASE_URL}/verify/${token}`;
 
     // Send verification email
     await sendEmail(

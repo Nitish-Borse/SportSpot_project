@@ -2,12 +2,12 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const sendEmail = require("../utils/sendEmail");
 
-// Step 1: Render forgot password page
+// Render forgot password page
 module.exports.renderForgotForm = (req, res) => {
   res.render("users/forgotPassword.ejs");
 };
 
-// Step 2: Handle form submission - send reset link
+// Handle form submission - send reset link
 module.exports.sendResetLink = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
@@ -18,7 +18,8 @@ module.exports.sendResetLink = async (req, res) => {
   }
 
   const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "10m" });
-  const resetUrl = `http://localhost:8080/reset-password/${token}`;
+
+  const resetUrl = `${process.env.APP_BASE_URL}/reset-password/${token}`;
 
   await sendEmail(
     user.email,
@@ -30,13 +31,13 @@ module.exports.sendResetLink = async (req, res) => {
   res.redirect("/login");
 };
 
-// Step 3: Render reset password form
+// Render reset password form
 module.exports.renderResetForm = (req, res) => {
   const { token } = req.params;
   res.render("users/resetPassword.ejs", { token });
 };
 
-// Step 4: Handle password reset submission
+// Handle password reset submission
 module.exports.resetPassword = async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
@@ -50,7 +51,7 @@ module.exports.resetPassword = async (req, res) => {
       return res.redirect("/forgot-password");
     }
 
-    await user.setPassword(password); // Passport-Local-Mongoose helper
+    await user.setPassword(password);
     await user.save();
 
     req.flash("success", "Password reset successful! You can now log in.");

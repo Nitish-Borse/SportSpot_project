@@ -1,5 +1,5 @@
 const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const { CloudinaryStorage } = require('multer-storage-cloudinary-v2');
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -10,8 +10,8 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'sprotspot_DEV',
-    allowerdFormats: ["png", "jgp", "jpeg"],
+    folder: "sportspot_DEV",
+    allowed_formats: ["jpg", "jpeg", "png"],
   },
 });
 

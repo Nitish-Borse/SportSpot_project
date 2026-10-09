@@ -64,26 +64,5 @@ router.get("/verify/:token", async (req, res) => {
   }
 });
 
-router.get("/forgot", (req, res) => {
-  res.render("user/forgot.ejs");
-});
-
-router.post("/forgot", async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) {
-    req.flash("error", "Email not found");
-    return res.redirect("/forgot");
-  }
-
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "15m" });
-  const resetUrl = `http://localhost:8080/reset/${token}`;
-
-  await sendEmail(user.email, "Password Reset", `Click to reset: ${resetUrl}`);
-  req.flash("success", "Password reset link sent to your email!");
-  res.redirect("/login");
-});
-
-
-
 module.exports = router;
 

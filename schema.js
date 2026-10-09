@@ -8,11 +8,6 @@ module.exports.sportItemSchema = Joi.object({
         pricePerHour: Joi.number().required().min(0),
         location: Joi.string().required(),
         sportCategory: Joi.string().required(),
-        //availableDates: Joi.string().required(),
-        image: Joi.object({
-            url: Joi.string().uri().required()
-        }).required(),
-        //owner: Joi.string().required(),
     }).required(),
 });
 

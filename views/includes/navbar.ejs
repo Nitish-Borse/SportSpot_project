@@ -1,12 +1,10 @@
 <style>
-/* ... existing styles ... */
 .search-btn {
     background-color: #fe424d;
     color: #fff;
     border-radius: 25px;
     padding: 0 1rem;
     white-space: nowrap;
-    /* keep text in one line */
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -26,9 +24,6 @@
 }
 /* Navbar dropdown overlay fix */
 @media (max-width: 768px) {
-    /*.cointainer {
-        margin-top: 3rem !important;
-    } */
     #navbarNavAltMarkup {
         position: absolute;
         top: 100%;
@@ -86,15 +81,13 @@
     </div>
 </nav>
 <script>
-    const navLinks = document.querySelectorAll(".nav-links a"); // Corrected selector to catch all 'a' tags
+    const navLinks = document.querySelectorAll(".nav-links a");
     const currentPath = window.location.pathname;
 
     navLinks.forEach(link => {
         const href = link.getAttribute("href");
-        //' Skip Logout
         if (href === "/logout") return;
 
-        //' Match categories (ground, equipment) and specific pages
         if (
             (href === "/sportItems/ground" && currentPath.startsWith("/sportItems/ground")) ||
             (href === "/sportItems/equipment" && currentPath.startsWith("/sportItems/equipment")) ||
@@ -107,7 +100,6 @@
             link.classList.add("active-link");
         }
 
-        // Instant click feedback
         link.addEventListener("click", function () {
             navLinks.forEach(l => {
                 if (l.getAttribute("href") !== "/logout") {

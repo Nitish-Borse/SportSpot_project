@@ -1,4 +1,3 @@
-const { required, ref } = require("joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -21,11 +20,14 @@ const bookingSchema = new Schema({
         type: Date,
         required: true,
     },
+
     status: {
         type: String,
-        enum: ["pending", "confirmed", "cancelled"],
+        enum: ["pending", "confirmed", "cancelled", "completed"],
         default: "pending",
     },
+
+
     createdAt: {
         type: Date,
         default: Date.now,
@@ -37,4 +39,4 @@ const bookingSchema = new Schema({
 
 bookingSchema.index({ sportItem: 1, startAt: 1, endAt: 1 });
 
-module.exports = mongoose.model("Booking",bookingSchema);
+module.exports = mongoose.model("Booking", bookingSchema);

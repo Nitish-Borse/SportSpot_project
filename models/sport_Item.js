@@ -3,13 +3,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review.js");
 
-
 const sportItemSchema = new Schema({
     title: {
         type: String,
         required: true
     },
-    type: { // 'equipment' or 'ground'
+    type: {
         type: String,
         enum: ['equipment', 'ground'],
         required: true
@@ -26,11 +25,10 @@ const sportItemSchema = new Schema({
         type: String,
         required: true
     },
-    sportCategory: { // cricket, football, badminton, etc.
+    sportCategory: {
         type: String,
         required: true
     },
-    //availableDates: [String], // store as "YYYY-MM-DD"
     image: {
         url: {
             type: String,

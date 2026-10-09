@@ -20,12 +20,22 @@ module.exports.saveRedirectUrl = (req, res, next) => {
     next();
 };
 
+
+module.exports.requireSportItemImage = (req, res, next) => {
+    if (!req.file) {
+        throw new ExpressError("Please upload a sport item image.", 400);
+    }
+
+    next();
+};
+
+
 // Middleware to validate SportItem data using Joi
 module.exports.validateSportItem = (req, res, next) => {
     const { error } = sportItemSchema.validate(req.body);
     if (error) {
         const msg = error.details.map((el) => el.message).join(",");
-        throw new ExpressError(400, msg);
+        throw new ExpressError(msg, 400);
     } else {
         next();
     }
@@ -47,7 +57,7 @@ module.exports.validateReview = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
     if (error) {
         const msg = error.details.map((el) => el.message).join(",");
-        throw new ExpressError(400, msg);
+       throw new ExpressError(msg, 400);
     } else {
         next();
     }

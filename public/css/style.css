@@ -138,8 +138,7 @@ body {
     border: none !important;
 }
 
-/* review block collapse fix css */
-/* Responsive fixes for Show Page */
+
 @media (max-width: 780px) {
 
     .main_cointainer {
@@ -155,7 +154,6 @@ body {
         margin: 0 auto;
     }
 
-    /* Buttons section - fix alignment and size */
     .btns {
         display: flex;
         flex-direction: column;
@@ -164,7 +162,6 @@ body {
         margin-bottom: 1rem;
     }
 
-    /* Ensure both Edit (link) and Delete (form button) match */
     .btns a,
     .btns form {
         width: 100%;
@@ -186,7 +183,6 @@ body {
         display: block;
     }
 
-    /* Edit button */
     .edit-btn {
         background-color: #fe424d !important;
         color: #fff !important;
@@ -198,7 +194,6 @@ body {
         transform: scale(1.03);
     }
 
-    /* Delete button */
     .del-btn {
         background-color: #444 !important;
         color: #fff !important;
@@ -211,7 +206,6 @@ body {
     }
 
 
-    /* Review section cards */
     .row .card {
         width: 90% !important;
         margin: 0.5rem auto !important;
@@ -240,32 +234,28 @@ body {
 
 .owner-actions {
     display: flex;
-    /* Enables flexible layout */
     gap: 1rem;
-    /* Adds space between the buttons */
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
 
-/* Important: This ensures the button inside the form is treated as a direct flex item */
+
 .owner-actions form {
     display: contents;
 }
 
-/* Custom fix to make buttons the same size */
+
 .owner-btn-fix {
-    /* Set a minimum width to force the smaller button ("Edit") to expand */
     min-width: 80px;
     text-align: center;
-    /* Ensures the text is centered within the fixed width */
 }
 
-/* Ensure the button inside the form also respects the min-width */
+
 .owner-actions form .btn {
     min-width: 80px;
 }
 
-/* To fix the flash box  */
+
 .flash-center {
     margin-left: auto !important;
     margin-right: auto !important;

@@ -13,8 +13,8 @@ const sendEmail = async (to, subject, text, html = null) => {
     from: `"SportSpot Team" <${process.env.EMAIL_USER}>`,
     to,
     subject,
-    text, // fallback for plain text
-    html, // HTML version if provided
+    text,
+    html,
   });
 };
 

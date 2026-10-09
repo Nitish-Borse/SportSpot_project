@@ -8,9 +8,11 @@ router.get("/sportItems/:id/book", isLoggedIn, bookingController.renderNewBookin
 
 router.post("/sportItems/:id/book", isLoggedIn, bookingController.createBooking);
 
-// In routes/booking.js, replace line 850 with:
-
-router.get("/bookings/:bookingld", isLoggedIn, bookingController.showBooking);
+router.get(
+    "/bookings/:bookingId",
+    isLoggedIn,
+    wrapAsync(bookingController.showBooking)
+);
 
 // Route for a user to view their own bookings
 router.get("/my/bookings", isLoggedIn, wrapAsync(bookingController.userBookings));

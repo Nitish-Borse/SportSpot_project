@@ -9,19 +9,16 @@ module.exports.renderNewBookingForm = async (req, res) => {
 
   const now = new Date();
 
-  // ⭐ Fetch only upcoming (future) bookings, ignore past ones
   const existingBookings = await Booking.find({
     sportItem: sportItem._id,
     status: { $in: ["pending", "confirmed"] },
-    endAt: { $gt: now }   // <<< 🧠 key change here
+    endAt: { $gt: now }
   }).sort({ startAt: 1 });
 
   res.render("bookings/new", { sportItem, existingBookings });
 };
 
-
 async function hasOverlap(sportItemId, startAt, endAt) {
-  // Overlap condition: existing.start < new.end && existing.end > new.start
   const overlapping = await Booking.findOne({
     sportItem: sportItemId,
     status: { $in: ["pending", "confirmed"] },
@@ -51,7 +48,6 @@ module.exports.createBooking = async (req, res, next) => {
       return res.redirect(`/sportItems/${sportItemId}/book`);
     }
 
-    // ✅ Prevent overlapping bookings
     const overlapping = await Booking.findOne({
       sportItem: sportItemId,
       status: { $in: ["pending", "confirmed"] },
@@ -72,8 +68,7 @@ module.exports.createBooking = async (req, res, next) => {
       return res.redirect(`/sportItems/${sportItemId}/book`);
     }
 
-
-    // ✅ Save new booking
+    // Save new booking
     const booking = new Booking({
       sportItem: sportItemId,
       user: userId,
@@ -85,7 +80,7 @@ module.exports.createBooking = async (req, res, next) => {
 
     await booking.save();
 
-    // ✅ Send confirmation email
+    // Send confirmation email
     const sportItem = await SportItem.findById(sportItemId);
 
     const subject = `Booking Confirmed — SportSpot`;
@@ -126,7 +121,6 @@ SportSpot Team`;
   }
 };
 
-
 // Show booking details
 module.exports.showBooking = async (req, res, next) => {
   const booking = await Booking.findById(req.params.bookingId).populate("sportItem").populate("user");
@@ -140,7 +134,7 @@ module.exports.showBooking = async (req, res, next) => {
 module.exports.userBookings = async (req, res) => {
   const now = new Date();
 
-  // 🧠 Convert past bookings to completed in DB
+  // Convert past bookings to completed in DB
   await Booking.updateMany(
     {
       user: req.user._id,
@@ -150,7 +144,7 @@ module.exports.userBookings = async (req, res) => {
     { $set: { status: "completed" } }
   );
 
-  // 🧠 Fetch updated bookings
+  // Fetch updated bookings
   const bookings = await Booking.find({ user: req.user._id })
     .populate("sportItem")
     .sort({ startAt: -1 });
@@ -158,11 +152,7 @@ module.exports.userBookings = async (req, res) => {
   res.render("bookings/userBookings.ejs", { bookings });
 };
 
-
-
-// owner view: GET /owner/bookings
 module.exports.ownerBookings = async (req, res) => {
-  // find sportItems owned by this user
   const items = await SportItem.find({ owner: req.user._id }).select("_id");
   const itemIds = items.map(i => i._id);
   const bookings = await Booking.find({ sportItem: { $in: itemIds } })
@@ -172,7 +162,7 @@ module.exports.ownerBookings = async (req, res) => {
   res.render("bookings/ownerIndex.ejs", { bookings });
 };
 
-// Function to cancel a booking (NEW ADDITION)
+// Function to cancel a booking
 module.exports.cancelBooking = async (req, res) => {
   const { bookingId } = req.params;
   const booking = await Booking.findById(bookingId).populate("user");
@@ -182,30 +172,28 @@ module.exports.cancelBooking = async (req, res) => {
     return res.redirect("/my/bookings");
   }
 
-  // 1. Check if the logged-in user is the owner of the booking
+  // Check if the logged-in user is the owner of the booking
   if (!booking.user._id.equals(req.user._id)) {
     req.flash("error", "You do not have permission to cancel this booking.");
     return res.redirect("/my/bookings");
   }
 
-  // 2. Check if the booking start time is in the future
+  // Check if the booking start time is in the future
   if (booking.startAt < new Date()) {
     req.flash("error", "Cannot cancel. This booking has already started.");
     return res.redirect("/my/bookings");
   }
 
-  // 3. Check if it's already cancelled
+  // Check if it's already cancelled
   if (booking.status === "cancelled") {
     req.flash("error", "This booking is already cancelled.");
     return res.redirect("/my/bookings");
   }
 
-  // 4. Update status to 'cancelled'
+  // Update status to 'cancelled'
   booking.status = "cancelled";
   await booking.save();
 
   req.flash("success", "Booking successfully cancelled.");
   res.redirect("/my/bookings");
 };
-
-
